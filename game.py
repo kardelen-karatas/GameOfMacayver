@@ -4,12 +4,14 @@ Model of MacGayver's Labyrinth Game
 Author: Kardelen Karatas
 Date: 23 october 2018 
 """
+import random
 
 
 class Lab:
 
     def __init__(self, rows, wall):
         self._player = None
+        self._moving_object = None
         self._rows = rows
         self._wall = wall
         self._lab = [
@@ -23,7 +25,10 @@ class Lab:
     def wall(self):
         return self._wall
 
-    def create_lab(self):
+    def create_lab(self, guard):
+
+        guard_x = random.randint(1, self._rows - 2)
+        guard_y = random.randrange(0, self._rows, self._rows - 1)
 
         for i in range(self._rows):
 
@@ -33,6 +38,18 @@ class Lab:
                 self._lab[i][0] = self._wall
                 self._lab[i][-1] = self._wall
 
+        self._lab[guard_y][guard_x] = guard
+
+        return self._lab
+
+    def add_moving_object(self, moving_object):
+
+        self._moving_object = moving_object
+        if self._lab[moving_object.y()][moving_object.x()] == ' ':
+            self._lab[moving_object.y()][moving_object.x()
+                                         ] = moving_object.symbol()
+        else:
+            pass
         return self._lab
 
     def add_player(self, player):
@@ -43,6 +60,9 @@ class Lab:
     def move_player(self, dest_x, dest_y):
         self._lab[self._player.y()][self._player.x()] = " "
         self._lab[dest_y][dest_x] = self._player.symbol()
+
+    def counter(self):
+        pass
 
     def __str__(self):
         return '\n'.join([repr(l) for l in self._lab])
@@ -79,3 +99,19 @@ class Player:
     def move_up(self):
         self._lab.move_player(self._x, self._y - 1)
         self._y -= 1
+
+
+class MovingObject:
+    def __init__(self, symbol):
+        self._x = random.randint(2, 9)
+        self._y = random.randint(2, 9)
+        self._symbol = symbol
+
+    def x(self):
+        return self._x
+
+    def y(self):
+        return self._y
+
+    def symbol(self):
+        return self._symbol
