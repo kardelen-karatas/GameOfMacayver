@@ -9,13 +9,14 @@ import random
 
 class Lab:
 
-    def __init__(self, rows, wall):
+    def __init__(self, rows, columns, wall):
         self._player = None
         self._moving_object = None
         self._rows = rows
+        self._columns = columns
         self._wall = wall
         self._lab = [
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+            [" "for j in range(self._columns)]
             for _ in range(self._rows)
         ]
 
@@ -27,9 +28,6 @@ class Lab:
 
     def create_lab(self, guard):
 
-        guard_x = random.randint(1, self._rows - 2)
-        guard_y = random.randrange(0, self._rows, self._rows - 1)
-
         for i in range(self._rows):
 
             if i == 0 or i == self._rows - 1:
@@ -38,7 +36,13 @@ class Lab:
                 self._lab[i][0] = self._wall
                 self._lab[i][-1] = self._wall
 
-        self._lab[guard_y][guard_x] = guard
+        guard_y = random.randint(0, self._rows - 1)
+        if guard_y == self._rows - 1 or guard_y == 0:
+            guard_x = random.randint(1, self._columns - 1)
+            self._lab[guard_y][guard_x] = guard
+        else:
+            guard_x = random.randrange(0, self._columns, self._columns - 1)
+            self._lab[guard_y][guard_x] = guard
 
         return self._lab
 
@@ -58,8 +62,15 @@ class Lab:
         return self._lab
 
     def move_player(self, dest_x, dest_y):
+        if self._is_wall(dest_x, dest_y):
+            return
         self._lab[self._player.y()][self._player.x()] = " "
         self._lab[dest_y][dest_x] = self._player.symbol()
+
+    def _is_wall(self, dest_x, dest_y):
+        if self._lab[dest_y][dest_x] == self._wall:
+            print("Danger for y : {}, x : {}".format(dest_y, dest_x))
+            return True
 
     def counter(self):
         pass
