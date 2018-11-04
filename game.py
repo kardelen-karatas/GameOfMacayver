@@ -2,7 +2,7 @@
 Openclassrooms Project no:3
 Model of MacGayver's Labyrinth Game
 Author: Kardelen Karatas
-Date: 23 october 2018 
+Date: 23 october 2018
 """
 import random
 
@@ -10,8 +10,10 @@ import random
 class Lab:
 
     def __init__(self, rows, columns, wall):
+        self._game_over = False
         self._player = None
         self._moving_object = None
+        self._guard = None
         self._rows = rows
         self._columns = columns
         self._wall = wall
@@ -19,6 +21,7 @@ class Lab:
             [" "for j in range(self._columns)]
             for _ in range(self._rows)
         ]
+        self.build_wall()
 
     def rows(self):
         return self._rows
@@ -26,7 +29,7 @@ class Lab:
     def wall(self):
         return self._wall
 
-    def create_lab(self, guard):
+    def build_wall(self):
 
         for i in range(self._rows):
 
@@ -36,15 +39,17 @@ class Lab:
                 self._lab[i][0] = self._wall
                 self._lab[i][-1] = self._wall
 
+        return self._lab
+
+    def add_guard(self, guard):
+        self._guard = guard
         guard_y = random.randint(0, self._rows - 1)
         if guard_y == self._rows - 1 or guard_y == 0:
             guard_x = random.randint(1, self._columns - 1)
-            self._lab[guard_y][guard_x] = guard
+            self._lab[guard_y][guard_x] = self._guard.symbol()
         else:
             guard_x = random.randrange(0, self._columns, self._columns - 1)
-            self._lab[guard_y][guard_x] = guard
-
-        return self._lab
+            self._lab[guard_y][guard_x] = self._guard.symbol()
 
     def add_moving_object(self, moving_object):
 
@@ -62,18 +67,28 @@ class Lab:
         return self._lab
 
     def move_player(self, dest_x, dest_y):
-        if self._is_wall(dest_x, dest_y):
-            return
-        self._lab[self._player.y()][self._player.x()] = " "
-        self._lab[dest_y][dest_x] = self._player.symbol()
+
+        if not self._update_game_state(dest_x, dest_y):    
+            if not self._is_wall(dest_x, dest_y):
+                self._lab[self._player.y()][self._player.x()] = " "
+                self._lab[dest_y][dest_x] = self._player.symbol()
+                self._player.set_coords(dest_x, dest_y)
+
+            print("Game over") 
 
     def _is_wall(self, dest_x, dest_y):
         if self._lab[dest_y][dest_x] == self._wall:
-            print("Danger for y : {}, x : {}".format(dest_y, dest_x))
             return True
 
-    def counter(self):
-        pass
+    def _is_object(self, dest_x, dest_y):
+        if self._lab[dest_y][dest_x] == self._moving_object:
+            return True
+
+    def _update_game_state(self, dest_x, dest_y):
+        if self._lab[dest_y][dest_x] == self._guard.symbol():
+            self._game_over = True
+        else:
+            self._game_over = False
 
     def __str__(self):
         return '\n'.join([repr(l) for l in self._lab])
@@ -92,24 +107,23 @@ class Player:
     def y(self):
         return self._y
 
+    def set_coords(self, x, y):
+        self._x, self._y = x, y
+
     def symbol(self):
         return self._symbol
 
     def move_right(self):
         self._lab.move_player(self._x + 1, self._y)
-        self._x += 1
 
     def move_left(self):
         self._lab.move_player(self._x - 1, self._y)
-        self._x -= 1
 
     def move_down(self):
         self._lab.move_player(self._x, self._y + 1)
-        self._y += 1
 
     def move_up(self):
         self._lab.move_player(self._x, self._y - 1)
-        self._y -= 1
 
 
 class MovingObject:
@@ -123,6 +137,14 @@ class MovingObject:
 
     def y(self):
         return self._y
+
+    def symbol(self):
+        return self._symbol
+
+
+class Guard:
+    def __init__(self, symbol):
+        self._symbol = symbol
 
     def symbol(self):
         return self._symbol
