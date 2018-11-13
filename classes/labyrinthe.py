@@ -12,6 +12,7 @@ class Labyrinthe:
             [Tile() for j in range(self.column)]
             for _ in range(self.row)
         ]
+        self.draw_labyrinthe()
 
 
     def draw_labyrinthe(self):

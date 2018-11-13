@@ -9,7 +9,7 @@ import random
 
 class Lab:
 
-    def __init__(self, rows, columns, wall):
+    def __init__(self, rows, columns, wall, floor):
         self._game_over = False
         self._player = None
         self._moving_object = None
@@ -17,14 +17,18 @@ class Lab:
         self._rows = rows
         self._columns = columns
         self._wall = wall
+        self._floor = floor
         self._lab = [
-            [" "for j in range(self._columns)]
+            [self._floor for j in range(self._columns)]
             for _ in range(self._rows)
         ]
         self.build_wall()
 
     def rows(self):
         return self._rows
+
+    def columns(self):
+        return self._columns
 
     def wall(self):
         return self._wall
@@ -45,16 +49,17 @@ class Lab:
         self._guard = guard
         guard_y = random.randint(0, self._rows - 1)
         if guard_y == self._rows - 1 or guard_y == 0:
-            guard_x = random.randint(1, self._columns - 1)
+            guard_x = random.randint(1, self._columns - 2)
             self._lab[guard_y][guard_x] = self._guard.symbol()
         else:
             guard_x = random.randrange(0, self._columns, self._columns - 1)
             self._lab[guard_y][guard_x] = self._guard.symbol()
+        return self._lab
 
     def add_moving_object(self, moving_object):
 
         self._moving_object = moving_object
-        if self._lab[moving_object.y()][moving_object.x()] == ' ':
+        if self._lab[moving_object.y()][moving_object.x()] == self._floor:
             self._lab[moving_object.y()][moving_object.x()
                                          ] = moving_object.symbol()
         else:
@@ -68,13 +73,11 @@ class Lab:
 
     def move_player(self, dest_x, dest_y):
 
-        if not self._update_game_state(dest_x, dest_y):    
+        if not self._update_game_state(dest_x, dest_y):
             if not self._is_wall(dest_x, dest_y):
-                self._lab[self._player.y()][self._player.x()] = " "
+                self._lab[self._player.y()][self._player.x()] = self._floor
                 self._lab[dest_y][dest_x] = self._player.symbol()
                 self._player.set_coords(dest_x, dest_y)
-
-            print("Game over") 
 
     def _is_wall(self, dest_x, dest_y):
         if self._lab[dest_y][dest_x] == self._wall:
@@ -107,8 +110,26 @@ class Player:
     def y(self):
         return self._y
 
-    def set_coords(self, x, y):
-        self._x, self._y = x, y
+    def set_coords(self, x, y):TILE_IMAGES = {
+    'floor': './images/floor.png'
+    'wall': './images/wall.png'
+}
+
+class Tile():
+    
+    def __init__(self, type):
+        self._type = type
+
+        self._x, self._y = x, yTILE_IMAGES = {
+    'floor': './images/floor.png'
+    'wall': './images/wall.png'
+}
+
+class Tile():
+    
+    def __init__(self, type):
+        self._type = type
+
 
     def symbol(self):
         return self._symbol
@@ -121,6 +142,7 @@ class Player:
 
     def move_down(self):
         self._lab.move_player(self._x, self._y + 1)
+        return self._x, self._y + 1
 
     def move_up(self):
         self._lab.move_player(self._x, self._y - 1)

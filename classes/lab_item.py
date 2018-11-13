@@ -5,9 +5,9 @@ from pygame.locals import *
 
 
 class LabItem:
-    def __init__(self, item_type = 'player'):
-        self.x = 0
-        self.y = 0
+    def __init__(self, item_type = 'player', x = 0, y = 0):
+        self.x = x
+        self.y = y
         self.item_type = item_type
 
     def move_right(self):
@@ -26,6 +26,6 @@ class LabItem:
         return "{}, {}, {}".format(self.item_type, self.x, self.y) 
 
 
-# class Guard(LabObject):
+# class Guard(LabItem):
 #     def __init__(self, type = 'guard'):
 #         super().__init__()

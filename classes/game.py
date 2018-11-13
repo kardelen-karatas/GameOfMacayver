@@ -24,7 +24,6 @@ class Game:
         self.height = 15
         self.tile_size = 20
         self.labyrinthe = Labyrinthe(self.width, self.height)
-        self.labyrinthe.draw_labyrinthe()
 
         self.player = LabItem()
         self.labyrinthe.canvas[self.player.x][self.player.y].add_lab_item(self.player) 
@@ -56,20 +55,20 @@ class Game:
                     sys.exit()
                 elif event.type == KEYDOWN:
                     tiles = self.labyrinthe.canvas
-                    if (event.key == K_RIGHT) and self.player.x < self.width - 1 and tiles[self.player.x+1][self.player.y].tile_type != 'water':
+                    if (event.key == K_RIGHT) and self.player.x < self.width - 1 and tiles[self.player.x + 1][self.player.y].tile_type == 'floor':
                         self.player.move_right()
                         tiles[self.player.x][self.player.y].add_lab_item(self.player)
 
-                    if (event.key == K_LEFT) and self.player.x !=0 :
+                    if (event.key == K_LEFT) and self.player.x !=0 and tiles[self.player.x - 1][self.player.y].tile_type == 'floor':
                         self.player.move_left()
                         tiles[self.player.x][self.player.y].add_lab_item(self.player)
 
-                    if (event.key == K_DOWN)  and self.player.y < self.height - 1:
+                    if (event.key == K_DOWN)  and self.player.y < self.height - 1 and tiles[self.player.x][self.player.y + 1].tile_type == 'floor':
                         self.player.move_down()
                         tiles[self.player.x][self.player.y].add_lab_item(self.player)
                         print(self.player.y)
 
-                    if (event.key == K_UP) and self.player.y != 0:
+                    if (event.key == K_UP) and self.player.y != 0 and tiles[self.player.x][self.player.y - 1].tile_type == 'floor':
                         self.player.move_up()
                         tiles[self.player.x][self.player.y].add_lab_item(self.player)
                         
