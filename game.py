@@ -104,33 +104,10 @@ class Player:
         self._symbol = symbol
         self._lab = lab
 
-    def x(self):
-        return self._x
-
-    def y(self):
-        return self._y
-
-    def set_coords(self, x, y):TILE_IMAGES = {
-    'floor': './images/floor.png'
-    'wall': './images/wall.png'
-}
-
-class Tile():
-    
-    def __init__(self, type):
-        self._type = type
-
-        self._x, self._y = x, yTILE_IMAGES = {
-    'floor': './images/floor.png'
-    'wall': './images/wall.png'
-}
-
-class Tile():
-    
-    def __init__(self, type):
-        self._type = type
-
-
+    def set_coords(self, x, y):
+        self.x = x
+        self.y = y
+        
     def symbol(self):
         return self._symbol
 
