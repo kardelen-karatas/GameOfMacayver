@@ -9,6 +9,7 @@ class LabItem:
         self.x = x
         self.y = y
         self.item_type = item_type
+        self.counter = 0
 
     def move_right(self):
         self.x += 1
@@ -21,9 +22,12 @@ class LabItem:
 
     def move_up(self):
         self.y -= 1
+
+    def pick_up(self):
+        self.counter += 1
     
     def __str__(self):
-        return "{}, {}, {}".format(self.item_type, self.x, self.y) 
+        return "{}".format(self.item_type)#, self.x, self.y)
 
 
 # class Guard(LabItem):

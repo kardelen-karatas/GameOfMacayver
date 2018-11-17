@@ -17,18 +17,20 @@ class Game:
         self.item_images = {
             'player': pygame.image.load('../../tuto/pics/octopus.png'),
             'guard': pygame.image.load('../../tuto/pics/black.png'),
+            'object': pygame.image.load ('../../tuto/pics/octopus.png'),
+            #'item': pygame.image.load ('../../tuto/pics/plankton.png'),
         }
 
         self.tile_size = 20
-        self.width = 5
-        self.height = 5
         self.labyrinth = Labyrinth('pattern_file')
-
-        self.guard = LabItem(item_type='guard', x=self.width - 1, y = self.height - 1 )
-        self.labyrinth.canvas[self.guard.x][self.guard.y].add_lab_item(self.guard)
+        self.width = self.labyrinth.width
+        self.height = self.labyrinth.height
 
         self.player = LabItem()
-        self.labyrinth.canvas[self.player.x][self.player.y].add_lab_item(self.player) 
+        self.labyrinth.canvas[self.player.x][self.player.y].add_lab_item(self.player)
+        self.guard = LabItem(item_type='guard', x=self.width - 1, y = self.height - 1 )
+        self.labyrinth.canvas[self.guard.x][self.guard.y].add_lab_item(self.guard)
+        self.labyrinth.add_random_items(2)
 
         self.display_surface = pygame.display.set_mode(
             (self.width * self.tile_size, self.height * self.tile_size))
@@ -42,6 +44,10 @@ class Game:
                 if tile.lab_item:
                     self.display_surface.blit(self.item_images[self.player.item_type], (self.player.x * self.tile_size, self.player.y * self.tile_size))
                     self.display_surface.blit(self.item_images[self.guard.item_type], (self.guard.x * self.tile_size, self.guard.y * self.tile_size))
+                    for item in self.labyrinth.list_item:
+                        #print("x:{}, y:{}".format(item.x, item.y))
+                        self.display_surface.blit (self.item_images[item.item_type],
+                                                   (item.x * self.tile_size, item.y * self.tile_size))
 
         pygame.display.flip()                    
                 
@@ -56,20 +62,31 @@ class Game:
                     sys.exit()
                 elif event.type == KEYDOWN:
                     tiles = self.labyrinth.canvas
+                    counter = 0
                     if (event.key == K_RIGHT) and self.player.x < self.width - 1 and tiles[self.player.x + 1][self.player.y].tile_type == 'floor':
+                        type = tiles[self.player.x - 1][self.player.y].lab_item
+                        print(type)
+                        print (self.labyrinth)
                         self.player.move_right()
                         tiles[self.player.x][self.player.y].add_lab_item(self.player)
 
                     if (event.key == K_LEFT) and self.player.x !=0 and tiles[self.player.x - 1][self.player.y].tile_type == 'floor':
+                        type = tiles[self.player.x - 1][self.player.y].lab_item
+                        print(type)
+                        print (self.labyrinth)
                         self.player.move_left()
                         tiles[self.player.x][self.player.y].add_lab_item(self.player)
 
                     if (event.key == K_DOWN)  and self.player.y < self.height - 1 and tiles[self.player.x][self.player.y + 1].tile_type == 'floor':
-                        self.player.move_down()
+                        type = tiles[self.player.x - 1][self.player.y].lab_item
+                        print(type)
+                        print (self.labyrinth)
+                        self.player.move_down ()
                         tiles[self.player.x][self.player.y].add_lab_item(self.player)
 
                     if (event.key == K_UP) and self.player.y != 0 and tiles[self.player.x][self.player.y - 1].tile_type == 'floor':
-                        self.player.move_up()
+                        type = tiles[self.player.x - 1][self.player.y].lab_item
+                        self.player.move_up ()
                         tiles[self.player.x][self.player.y].add_lab_item(self.player)
                         
             self.display_tiles()
