@@ -61,30 +61,31 @@ class Game:
                 elif event.type == KEYDOWN:
                     tiles = self.labyrinth.canvas
                     if (event.key == K_RIGHT) and self.player.x < self.width - 1 and tiles[self.player.y][self.player.x + 1].tile_type == 'floor':
+                        self.player.pick_up(tiles[self.player.y][self.player.x + 1])
                         self.player.move_right()
                         tiles[self.player.y][self.player.x].add_lab_item(self.player)
-                        self.player.pick_up(tiles[self.player.y][self.player.x - 1])
-                        #tiles[self.player.y][self.player.x - 1].remove_item()
+                        tiles[self.player.y][self.player.x - 1].remove_item()
                     
 
                     if (event.key == K_LEFT) and self.player.x != 0 and tiles[self.player.y][self.player.x - 1].tile_type == 'floor':
+                        self.player.pick_up(tiles[self.player.y][self.player.x - 1])
                         self.player.move_left()
                         tiles[self.player.y][self.player.x].add_lab_item(self.player)
-                        self.player.pick_up(tiles[self.player.y][self.player.x + 1])
-                        #tiles[self.player.y][self.player.x + 1].remove_item()
+                        tiles[self.player.y][self.player.x + 1].remove_item()
                     
 
                     if (event.key == K_DOWN) and self.player.y < self.height - 1 and tiles[self.player.y + 1][self.player.x].tile_type == 'floor':
+                        self.player.pick_up(tiles[self.player.y + 1][self.player.x])
                         self.player.move_down()
                         tiles[self.player.y][self.player.x].add_lab_item(self.player)
-                        self.player.pick_up(tiles[self.player.y - 1][self.player.x])
-                        #tiles[self.player.y - 1][self.player.x].remove_item()
+                        tiles[self.player.y - 1][self.player.x].remove_item()
                     
 
                     if (event.key == K_UP) and self.player.y != 0 and tiles[self.player.y - 1][self.player.x].tile_type == 'floor':
+                        self.player.pick_up(tiles[self.player.y - 1][self.player.x])
                         self.player.move_up()
                         tiles[self.player.y][self.player.x].add_lab_item(self.player)
-                        self.player.pick_up(tiles[self.player.y + 1][self.player.x])
-                        #tiles[self.player.y + 1][self.player.x].remove_item()
-                        
+                        tiles[self.player.y + 1][self.player.x].remove_item()
+
+                    print(self.player.counter)    
                 self.display_tiles()

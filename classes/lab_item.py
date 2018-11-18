@@ -1,5 +1,3 @@
-from tile import Tile
-
 class LabItem:
     def __init__(self, item_type = 'player', x = 0, y = 0):
         self.x = x
@@ -20,13 +18,9 @@ class LabItem:
         self.y -= 1
 
     def pick_up(self, tile):
-        self.tile = tile
         if tile.lab_item != None:
-            self.counter +=1 
-        tile.remove_item()
+            self.counter += 1
 
-        
-    
     def __str__(self):
         return "{}".format(self.item_type)#, self.x, self.y)
 
