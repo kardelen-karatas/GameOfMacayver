@@ -55,7 +55,7 @@ class Game:
         while True:
             pygame.time.Clock().tick(30)
             for event in pygame.event.get():
-                if event.type == QUIT or (self.player.x == self.guard.x and self.player.y == self.guard.y):
+                if event.type == QUIT or (self.player.counter == len(self.labyrinth.list_item) + 1):
                     pygame.quit()
                     sys.exit()
                 elif event.type == KEYDOWN:
@@ -87,5 +87,4 @@ class Game:
                         tiles[self.player.y][self.player.x].add_lab_item(self.player)
                         tiles[self.player.y + 1][self.player.x].remove_item()
 
-                    print(self.player.counter)    
                 self.display_tiles()
