@@ -1,11 +1,17 @@
 class LabItem:
-    def __init__(self, item_type = 'object', x = 0, y = 0):
+    def __init__(self, item_type, x, y):
         self.x = x
         self.y = y
         self.item_type = item_type
+
+    def __str__(self):
+        return "{}".format(self.item_type)#, self.x, self.y)
+
+class Player(LabItem):
+
+    def __init__(self,item_type = 'player', x = 0, y= 0):
+        LabItem.__init__(self, item_type, x, y)
         self.counter = 0
-
-
 
     def move_right(self, tiles):
         self.x += 1
@@ -31,10 +37,3 @@ class LabItem:
         if tile.lab_item != None and tile.lab_item.item_type == 'object':
             self.counter += 1
 
-    def __str__(self):
-        return "{}".format(self.item_type)#, self.x, self.y)
-
-
-# class Player(LabItem):
-#     def __init__(self, type = 'guard'):
-#         super().__init__()
