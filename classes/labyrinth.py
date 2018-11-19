@@ -42,6 +42,15 @@ class Labyrinth:
                 item.y = random.randint (0, self.height - 1)
             self.canvas[item.x][item.y].add_lab_item(item)
             self.list_item.append(item)
+
+    def is_winner(self, player):
+        winner = True
+        if player.counter == len(self.list_item) and player.x == self.width - 1 and player.y == self.height - 1:
+            winner
+        else:
+            winner = False
+        return winner  
+
     
     def __str__(self):
         l = ""
