@@ -25,7 +25,7 @@ class Labyrinth:
                         elif row == 'W':
                             tile = Tile(tile_type='water')
                         elif row == 'G':
-                            tile = Tile(tile_type='gate')
+                            tile = Tile(tile_type='guard')
                         line_list.append(tile)
                 self.canvas.append(line_list)
             return self.canvas
@@ -47,7 +47,7 @@ class Labyrinth:
 
     def is_winner(self, player):
         winner = True
-        if player.counter == len(self.list_item) and player.x == self.width - 1 and player.y == self.height - 1:
+        if player.counter == len(self.list_item) and player.x == self.width - 2 and player.y == self.height - 1:
             winner
         else:
             winner = False
