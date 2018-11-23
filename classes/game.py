@@ -13,7 +13,7 @@ class Game:
             'floor': pygame.image.load('../../tuto/pics/green.png'),
             'water': pygame.image.load('../../tuto/pics/blue.png'),
             'guard': pygame.image.load('../../tuto/pics/black.png'),
-        }
+            }
 
         self.item_images = {
             'player': pygame.image.load('../../tuto/pics/octopus.png'),
@@ -30,10 +30,13 @@ class Game:
         self.labyrinth.canvas[self.player.x][self.player.y].add_lab_item(
             self.player)
 
+        pygame.init()
         self.labyrinth.add_random_items(2)
         self.display_surface = pygame.display.set_mode(
-            (self.width * self.tile_size, self.height * self.tile_size))
+            (self.width * self.tile_size, self.height * self.tile_size + self.tile_size))
+        self.text_font = pygame.font.Font('freesansbold.ttf', 18)  
 
+        
     def display_tiles(self):
         for line in range(self.height):
             for column in range(self.width):
@@ -44,7 +47,16 @@ class Game:
                     self.display_surface.blit(self.item_images[tile.lab_item.item_type], (
                         column * self.tile_size, line * self.tile_size))
 
-        pygame.display.flip()
+
+    def display_text(self):
+        bottom_text = "".join(" X " + str(self.player.counter))
+        text_surface = pygame.Surface((self.width * self.tile_size, self.tile_size))
+        text_surface.fill((74, 161, 103))
+        text_render = self.text_font.render(bottom_text, True, (0, 0, 0))
+        self.display_surface.blit(text_surface, (0, self.height * self.tile_size))
+        self.display_surface.blit(self.item_images['object'], (0, self.height * self.tile_size))
+        self.display_surface.blit(text_render, (self.tile_size, self.height * self.tile_size))
+
 
     def run(self):
         while True:
@@ -76,8 +88,5 @@ class Game:
                         self.player.move_up(tiles)
 
                 self.display_tiles()
-
-#step_ahead
-#step_behind
-#step_up
-#step_down
+                self.display_text()
+                pygame.display.flip()
