@@ -51,7 +51,7 @@ class Game:
     def display_text(self):
         bottom_text = "".join(" X " + str(self.player.counter))
         text_surface = pygame.Surface((self.width * self.tile_size, self.tile_size))
-        text_surface.fill((74, 161, 103))
+        text_surface.fill((74, 161, 38))
         text_render = self.text_font.render(bottom_text, True, (0, 0, 0))
         self.display_surface.blit(text_surface, (0, self.height * self.tile_size))
         self.display_surface.blit(self.item_images['object'], (0, self.height * self.tile_size))
