@@ -1,4 +1,4 @@
-from game import Game
+from classes.game import Game
 
 def main():
 
@@ -7,4 +7,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

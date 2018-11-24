@@ -1,28 +1,28 @@
-import time
-from tile import Tile
-from lab_item import LabItem, Player
-from labyrinth import Labyrinth
 import pygame
 import sys
 from pygame.locals import *
+import time
+import os
+from classes.tile import Tile
+from classes.lab_item import LabItem, Player
+from classes.labyrinth import Labyrinth
 
 
 class Game:
     def __init__(self):
         self.tile_images = {
-            'floor': pygame.image.load('../../tuto/pics/green.png'),
-            'water': pygame.image.load('../../tuto/pics/blue.png'),
-            'guard': pygame.image.load('../../tuto/pics/black.png'),
+            'floor': pygame.image.load(os.path.join('images', 'green.png')),
+            'water': pygame.image.load(os.path.join('images', 'blue.png')),
+            'guard': pygame.image.load(os.path.join('images', 'black.png')),
             }
 
         self.item_images = {
-            'player': pygame.image.load('../../tuto/pics/octopus.png'),
-            'object': pygame.image.load('../../tuto/pics/perso.png'),
-            #'item': pygame.image.load ('../../tuto/pics/plankton.png'),
+            'player': pygame.image.load(os.path.join('images', 'octopus.png')),
+            'object': pygame.image.load(os.path.join('images', 'perso.png')),
         }
 
         self.tile_size = 20
-        self.labyrinth = Labyrinth('pattern_file')
+        self.labyrinth = Labyrinth(os.path.join('images', 'pattern_file'))
         self.width = self.labyrinth.width
         self.height = self.labyrinth.height
 
@@ -50,8 +50,10 @@ class Game:
 
     def display_text(self):
         bottom_text = "".join(" X " + str(self.player.counter))
+        if self.labyrinth.in_front_of_guard(self.player) and not self.labyrinth.is_winner(self.player):
+            bottom_text = "".join(" X " + str(self.player.counter) + "  You have to collecte all items")
         text_surface = pygame.Surface((self.width * self.tile_size, self.tile_size))
-        text_surface.fill((74, 161, 38))
+        text_surface.fill((19, 157, 255))
         text_render = self.text_font.render(bottom_text, True, (0, 0, 0))
         self.display_surface.blit(text_surface, (0, self.height * self.tile_size))
         self.display_surface.blit(self.item_images['object'], (0, self.height * self.tile_size))

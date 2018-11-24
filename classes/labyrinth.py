@@ -1,9 +1,8 @@
 import random
 import pygame
-from tile import Tile
-from lab_item import LabItem
+from classes.tile import Tile
+from classes.lab_item import LabItem
 from pygame.locals import *
-
 
 
 class Labyrinth:
@@ -33,26 +32,28 @@ class Labyrinth:
     def add_random_items(self, num_item):
         self.list_item = []
         for i in range(num_item):
-            x = random.randint(0,self.width - 1)
-            y = random.randint (0,self.height - 1)
-            item = LabItem(item_type='object', x = x, y = y)
-            if item.x == 0 and item.y == 0 or item.x == self.width - 1 and item.y == self.height - 1:
-                item.x = random.randint (0, self.width - 1)
-                item.y = random.randint (0, self.height - 1)
-            if self.canvas[item.x][item.y].tile_type != 'floor':
-                item.x = random.randint (0, self.width - 1)
-                item.y = random.randint (0, self.height - 1)
+            x = random.randint(0, self.width - 1)
+            y = random.randint(0, self.height - 1)
+            item = LabItem(item_type='object', x=x, y=y)
+            while not (item.x == 0 and item.y == 0 or item.x == self.width - 1 and item.y == self.height - 1) and self.canvas[item.x][item.y].tile_type != 'floor':
+                item.x = random.randint(0, self.width - 1)
+                item.y = random.randint(0, self.height - 1)
             self.canvas[item.x][item.y].add_lab_item(item)
             self.list_item.append(item)
 
     def is_winner(self, player):
-        winner = True
-        if player.counter == len(self.list_item) and player.x == self.width - 2 and player.y == self.height - 1:
-            winner
-        else:
-            winner = False
+        winner = False
+        if player.counter == len(self.list_item) and self.in_front_of_guard(player):
+            winner = True
         return winner
     
+    def in_front_of_guard(self, player):
+        in_front_of = False
+        if player.x == self.width - 2 and player.y == self.height - 1:
+            in_front_of  = True
+        return in_front_of
+
+
     def __str__(self):
         l = ""
         for line in self.canvas:
