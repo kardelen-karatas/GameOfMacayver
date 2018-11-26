@@ -5,11 +5,11 @@ import time
 import os
 from classes.tile import Tile
 from classes.lab_item import LabItem, Player
-from classes.labyrinth import Labyrinth
+from classes.labyrinth import Labyrinth, InvalidPattern
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, pattern_file):
         self.tile_images = {
             'floor': pygame.image.load(os.path.join('images', 'green.png')),
             'water': pygame.image.load(os.path.join('images', 'blue.png')),
@@ -22,7 +22,11 @@ class Game:
         }
 
         self.tile_size = 20
-        self.labyrinth = Labyrinth(os.path.join('images', 'pattern_file'))
+        try:
+            self.labyrinth = Labyrinth(os.path.join('images', pattern_file))
+        except InvalidPattern as e:
+            print('error: {}'.format(e))
+            sys.exit(1)
         self.width = self.labyrinth.width
         self.height = self.labyrinth.height
 

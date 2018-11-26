@@ -5,6 +5,10 @@ from classes.lab_item import LabItem
 from pygame.locals import *
 
 
+class InvalidPattern(Exception):
+    pass
+
+
 class Labyrinth:
     def __init__(self, pattern_file):
         self.pattern = pattern_file
@@ -14,20 +18,31 @@ class Labyrinth:
         self.draw()
 
     def draw(self):
+        if self.is_pattern_valid():
+            with open(self.pattern, "r") as file:
+                for line in file:
+                    line_list = []
+                    for row in line:
+                        if row != '\n':
+                            if row == 'F':
+                                tile = Tile()
+                            elif row == 'W':
+                                tile = Tile(tile_type='water')
+                            elif row == 'G':
+                                tile = Tile(tile_type='guard')
+                            line_list.append(tile)
+                    self.canvas.append(line_list)
+                return self.canvas
+        else: 
+            raise InvalidPattern("invalid labyrinth pattern")
+
+    def is_pattern_valid(self):
         with open(self.pattern, "r") as file:
             for line in file:
-                line_list = []
-                for row in line:
-                    if row != '\n':
-                        if row == '0':
-                            tile = Tile()
-                        elif row == 'W':
-                            tile = Tile(tile_type='water')
-                        elif row == 'G':
-                            tile = Tile(tile_type='guard')
-                        line_list.append(tile)
-                self.canvas.append(line_list)
-            return self.canvas
+                for row in line.rstrip():
+                    if row not in ('F', 'G', 'W'):
+                        return False  
+        return True 
 
     def add_random_items(self, num_item):
         self.list_item = []
