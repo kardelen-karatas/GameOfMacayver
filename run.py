@@ -6,15 +6,15 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "pattern_file",
+        "pattern",
         nargs='?',
-        default='pattern_2',
+        default='pattern_file',
         help="this file contains the pattern of the labyrinth. File must have 15 rows and 15 columns. The pattern of the labyrinth is composed of the 'F' and 'W'. 'F' represents the floor, 'W' represents water. The position of the guardian, represented by 'G', must also be proposed in the pattern. The labyrinth contains only one guardian and it should be placed at 15th column and on the 15th line (on the bottom right) of the labyrinthe, like lab[14][14].",
     )
     arguments = parser.parse_args()
-    file = arguments.pattern_file
+    p_file = arguments.pattern
 
-    g = Game(file)
+    g = Game(p_file)
     g.run()
 
 

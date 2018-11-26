@@ -12,6 +12,7 @@ class Player(LabItem):
     def __init__(self,item_type = 'player', x = 0, y= 0):
         LabItem.__init__(self, item_type, x, y)
         self.counter = 0
+        self.lives = 1
 
     def move_right(self, tiles):
         self.x += 1

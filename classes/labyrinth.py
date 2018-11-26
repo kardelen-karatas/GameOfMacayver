@@ -12,8 +12,8 @@ class InvalidPattern(Exception):
 class Labyrinth:
     def __init__(self, pattern_file):
         self.pattern = pattern_file
-        self.height = 15
-        self.width = 15
+        self.height = 0
+        self.width = 0
         self.canvas = []
         self.draw()
 
@@ -21,27 +21,34 @@ class Labyrinth:
         if self.is_pattern_valid():
             with open(self.pattern, "r") as file:
                 for line in file:
+                    line = line.rstrip()
+                    self.height = len(line)
                     line_list = []
-                    for row in line:
-                        if row != '\n':
-                            if row == 'F':
-                                tile = Tile()
-                            elif row == 'W':
-                                tile = Tile(tile_type='water')
-                            elif row == 'G':
-                                tile = Tile(tile_type='guard')
-                            line_list.append(tile)
+                    for col in line:
+                        if col == 'F':
+                            tile = Tile()
+                        elif col == 'W':
+                            tile = Tile(tile_type='water')
+                        elif col == 'G':
+                            tile = Tile(tile_type='guard')
+                        line_list.append(tile)
+                    self.width = len(line_list)
                     self.canvas.append(line_list)
-                return self.canvas
+                return self.canvas   
         else: 
             raise InvalidPattern("invalid labyrinth pattern")
 
     def is_pattern_valid(self):
         with open(self.pattern, "r") as file:
-            for line in file:
-                for row in line.rstrip():
-                    if row not in ('F', 'G', 'W'):
-                        return False  
+            for i, line in enumerate(file):
+                for j, col in enumerate(line):
+                    if col != '\n':
+                        if col not in ('F', 'G', 'W'):
+                            return False
+                        elif i == 14 and j == 14 and col != 'G':
+                            return False
+                        elif i == 0 and j == 0 and col != 'F':
+                            return False
         return True 
 
     def add_random_items(self, num_item):
@@ -57,22 +64,22 @@ class Labyrinth:
             self.list_item.append(item)
 
     def is_winner(self, player):
-        winner = False
         if player.counter == len(self.list_item) and self.in_front_of_guard(player):
-            winner = True
-        return winner
+            return True
+        elif player.counter != len(self.list_item) and self.in_front_of_guard(player):
+            player.lives = 0
+            return False
+        return False
     
     def in_front_of_guard(self, player):
-        in_front_of = False
         if player.x == self.width - 2 and player.y == self.height - 1:
-            in_front_of  = True
-        return in_front_of
-
+            return True
+        return False
 
     def __str__(self):
         l = ""
         for line in self.canvas:
-            for row in line:
-                l += str(row) + "  "
+            for col in line:
+                l += str(col) + "  "
             l += '\n'
         return l
