@@ -12,7 +12,7 @@ class Game:
     """
     Create the graphical environment of the game. It takes as a parameter a text file that contains the pattern
     Raise:
-        IndexError: if rows and columns is not equiale to 15
+        IndexError: if the pattern does not composed of 15 lines and 15 columns
         InvalidPattern: the pattern of the labyrinth does not correspond to he requests 
     """
     def __init__(self, pattern_file):
@@ -51,7 +51,7 @@ class Game:
     def display_tiles(self):
         """
         Display tile map of the labyrinth on the display screen.
-        Raises:
+        Raise:
             IndexError: if the pattern does not composed of 15 lines and 15 columns
         """
         try:
