@@ -15,7 +15,7 @@ def main():
     p_file = arguments.pattern
 
     g = Game(p_file)
-    g.run()
+    g.game_loop()
 
 
 if __name__ == '__main__':

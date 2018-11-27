@@ -89,9 +89,8 @@ class Labyrinth:
         """
         if player.counter == len(self.list_item) and self.in_front_of_guard(player):
             return True
-        elif player.counter != len(self.list_item) and self.in_front_of_guard(player):
-            player.lives = 0
-        return False
+        elif player.counter < len(self.list_item) and self.in_front_of_guard(player):
+            return False
     
     def in_front_of_guard(self, player):
         """

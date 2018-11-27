@@ -20,7 +20,6 @@ class Player(LabItem):
         """
         LabItem.__init__(self, item_type, x, y)
         self.counter = 0
-        self.lives = 1
 
     def move_right(self, tiles):
         """

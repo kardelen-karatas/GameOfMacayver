@@ -26,9 +26,7 @@ class Game:
             'player': pygame.image.load(os.path.join('images', 'octopus.png')),
             'object': pygame.image.load(os.path.join('images', 'perso.png')),
         }
-
         self.tile_size = 20
-
         try:
             self.labyrinth = Labyrinth(os.path.join('images', pattern_file))
             self.width = self.labyrinth.width
@@ -85,27 +83,20 @@ class Game:
     def item_counter_text(self):
         """ 
         Display number of collected item on the screen   
-        """     
-        
+        """             
         text = ' X ' + str(self.player.counter)
         text_position = (self.tile_size, self.height * self.tile_size)
         self.display_text(text, (0,0,0), text_position)
-        self.display_surface.blit(self.item_images['object'], (0, self.height * self.tile_size))        
-    
-#    def game_over(self):
-#        self.display_text('Game Over', (237, 41, 57), ((self.width * self.tile_size)/2, (self.height * self.tile_size)/2))
-#        time.sleep(2)
-#        quit(0)
+        self.display_surface.blit(self.item_images['object'], (0, self.height * self.tile_size))       
 
-
-    def run(self):
+    def game_loop(self):
         """
         Run the game on the display screen 
         """
         while True:
             pygame.time.Clock().tick(30)
             for event in pygame.event.get():
-                if event.type == QUIT or self.labyrinth.is_winner(self.player):
+                if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
 
@@ -132,5 +123,21 @@ class Game:
                         self.player.move_up(tiles)
 
                 self.display_tiles()
-                self.item_counter_text()                 
+                self.item_counter_text()
+
+                if self.labyrinth.is_winner(self.player):
+                    self.display_text("You Won", (0,0,0), ((self.height * self.tile_size)/2, (self.width * self.tile_size)/2 ))
+                    time.sleep(1)
+                    #self.game_loop()
+                elif not self.labyrinth.is_winner(self.player):
+                    self.display_text("GAME OVER", (0,0,0), ((self.height * self.tile_size)/2, (self.width * self.tile_size)/2 ))
+                    time.sleep(1)
+                
                 pygame.display.flip()
+
+        
+
+
+
+
+
