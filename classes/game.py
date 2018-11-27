@@ -9,6 +9,12 @@ from classes.labyrinth import Labyrinth, InvalidPattern
 
 
 class Game:
+    """
+    Create the graphical environment of the game. It takes as a parameter a text file that contains the pattern
+    Raise:
+        IndexError: if rows and columns is not equiale to 15
+        InvalidPattern: the pattern of the labyrinth does not correspond to he requests 
+    """
     def __init__(self, pattern_file):
         self.tile_images = {
             'floor': pygame.image.load(os.path.join('images', 'green.png')),
@@ -43,6 +49,11 @@ class Game:
             #sys.exit(1)
         
     def display_tiles(self):
+        """
+        Display tile map of the labyrinth on the display screen.
+        Raises:
+            IndexError: if the pattern does not composed of 15 lines and 15 columns
+        """
         try:
             for line in range(self.height):
                 for column in range(self.width):
@@ -58,6 +69,13 @@ class Game:
             #sys.exit(1)
 
     def display_text(self, text, color, text_place):
+        """
+        Display text on the display screen
+        Args :
+            text (str): text that wanted to be displayed.
+            color (tuple): RGB codes of the text color.
+            text_place (tuple): the coordinates in pixels of the text position on the screen. 
+        """
         text_surface = pygame.Surface((self.width * self.tile_size, self.tile_size))
         text_surface.fill((19, 157, 255))
         text_render = self.text_font.render(text, True, color) 
@@ -65,6 +83,10 @@ class Game:
         self.display_surface.blit(text_render, text_place)   
 
     def item_counter_text(self):
+        """ 
+        Display number of collected item on the screen   
+        """     
+        
         text = ' X ' + str(self.player.counter)
         text_position = (self.tile_size, self.height * self.tile_size)
         self.display_text(text, (0,0,0), text_position)
@@ -77,6 +99,9 @@ class Game:
 
 
     def run(self):
+        """
+        Run the game on the display screen 
+        """
         while True:
             pygame.time.Clock().tick(30)
             for event in pygame.event.get():

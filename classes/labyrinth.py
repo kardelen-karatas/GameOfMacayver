@@ -10,6 +10,9 @@ class InvalidPattern(Exception):
 
 
 class Labyrinth:
+    """
+    Labyrinth of the game. It has 15 rows, 15 columns and is composed of the F and W. F represents the floor, W represents water.  
+    """
     def __init__(self, pattern_file):
         self.pattern = pattern_file
         self.height = 0
@@ -18,6 +21,13 @@ class Labyrinth:
         self.draw()
 
     def draw(self):
+        """
+        Read the file that contains the labyrinth pattern and draw the canvas of the labyrinth if the pattern if valid.
+        Returns:
+            canvas (list): the canvas of the labyrinth
+        Raises:
+            InvalidPattern: the pattern of the labyrinth does not correspond to he requests 
+        """
         if self.is_pattern_valid():
             with open(self.pattern, "r") as file:
                 for line in file:
@@ -39,6 +49,9 @@ class Labyrinth:
             raise InvalidPattern("invalid labyrinth pattern")
 
     def is_pattern_valid(self):
+        """
+        Check if uploaded pattern file is valid
+        """
         with open(self.pattern, "r") as file:
             for i, line in enumerate(file):
                 for j, col in enumerate(line):
@@ -52,6 +65,11 @@ class Labyrinth:
         return True 
 
     def add_random_items(self, num_item):
+        """
+        Distibute items randomly on the labyrinth with a given quantity. 
+        Args: 
+            num_item (int): quantity of items that will be distributed on the labyrinth
+        """
         self.list_item = []
         for i in range(num_item):
             x = random.randint(0, self.width - 1)
@@ -64,14 +82,23 @@ class Labyrinth:
             self.list_item.append(item)
 
     def is_winner(self, player):
+        """
+        Check if the player is in front of the door and picked up all the items. 
+        Args: 
+            player (Player): the player of the game
+        """
         if player.counter == len(self.list_item) and self.in_front_of_guard(player):
             return True
         elif player.counter != len(self.list_item) and self.in_front_of_guard(player):
             player.lives = 0
-            return False
         return False
     
     def in_front_of_guard(self, player):
+        """
+        Check if the player is in front of the door. 
+        Args: 
+            player (Player): the player of the game
+        """
         if player.x == self.width - 2 and player.y == self.height - 1:
             return True
         return False
