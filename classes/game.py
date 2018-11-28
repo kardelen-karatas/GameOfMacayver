@@ -15,12 +15,13 @@ class Game:
         IndexError: if the pattern does not composed of 15 lines and 15 columns
         InvalidPattern: the pattern of the labyrinth does not correspond to he requests 
     """
+
     def __init__(self, pattern_file):
         self.tile_images = {
             'floor': pygame.image.load(os.path.join('images', 'green.png')),
             'water': pygame.image.load(os.path.join('images', 'blue.png')),
             'guard': pygame.image.load(os.path.join('images', 'black.png')),
-            }
+        }
 
         self.item_images = {
             'player': pygame.image.load(os.path.join('images', 'octopus.png')),
@@ -44,8 +45,8 @@ class Game:
         except (IndexError, InvalidPattern) as e:
             print('error: {}'.format(e))
             quit(0)
-            #sys.exit(1)
-        
+            # sys.exit(1)
+
     def display_tiles(self):
         """
         Display tile map of the labyrinth on the display screen.
@@ -64,7 +65,7 @@ class Game:
         except IndexError:
             print('error: labyrinth size have to be 15 x 15.')
             quit(0)
-            #sys.exit(1)
+            # sys.exit(1)
 
     def display_text(self, text, color, text_place):
         """
@@ -74,31 +75,33 @@ class Game:
             color (tuple): RGB codes of the text color.
             text_place (tuple): the coordinates in pixels of the text position on the screen. 
         """
-        text_surface = pygame.Surface((self.width * self.tile_size, self.tile_size))
+        text_surface = pygame.Surface(
+            (self.width * self.tile_size, self.tile_size))
         text_surface.fill((19, 157, 255))
-        text_render = self.text_font.render(text, True, color) 
-        self.display_surface.blit(text_surface, (0, self.height * self.tile_size))
-        self.display_surface.blit(text_render, text_place)   
+        text_render = self.text_font.render(text, True, color)
+        self.display_surface.blit(
+            text_surface, (0, self.height * self.tile_size))
+        self.display_surface.blit(text_render, text_place)
 
     def item_counter_text(self):
         """ 
         Display number of collected item on the screen   
-        """             
+        """
         text = ' X ' + str(self.player.counter)
         text_position = (self.tile_size, self.height * self.tile_size)
-        self.display_text(text, (0,0,0), text_position)
-        self.display_surface.blit(self.item_images['object'], (0, self.height * self.tile_size))       
+        self.display_text(text, (0, 0, 0), text_position)
+        self.display_surface.blit(
+            self.item_images['object'], (0, self.height * self.tile_size))
 
     def game_loop(self):
         """
         Run the game on the display screen 
         """
-        while True:
-            pygame.time.Clock().tick(30)
+        game_exit = False
+        while not game_exit:
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
+                    game_exit = True
 
                 elif event.type == KEYDOWN:
                     tiles = self.labyrinth.canvas
@@ -126,18 +129,15 @@ class Game:
                 self.item_counter_text()
 
                 if self.labyrinth.is_winner(self.player):
-                    self.display_text("You Won", (0,0,0), ((self.height * self.tile_size)/2, (self.width * self.tile_size)/2 ))
-                    time.sleep(1)
-                    #self.game_loop()
-                elif not self.labyrinth.is_winner(self.player):
-                    self.display_text("GAME OVER", (0,0,0), ((self.height * self.tile_size)/2, (self.width * self.tile_size)/2 ))
-                    time.sleep(1)
-                
+                    self.display_text("YOU WON", (255, 0, 0), ((
+                        self.height * self.tile_size)/2, (self.width * self.tile_size)/2))
+                    game_exit = True
+
+                if self.labyrinth.is_winner(self.player) == False:
+                    self.display_text("GAME OVER", (255, 0, 0), ((
+                        self.height * self.tile_size)/2, (self.width * self.tile_size)/2))
+                    time.sleep(0.7)
+                    game_exit = True
+
                 pygame.display.flip()
-
-        
-
-
-
-
-
+                pygame.time.Clock().tick(30)
