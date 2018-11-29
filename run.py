@@ -6,6 +6,7 @@ from classes.game import Game
 def main():
 
     parser = argparse.ArgumentParser()
+    #print(pattern_file = os.path.join(‘images\pattern_file’))
     parser.add_argument(
         "pattern",
         nargs='?',

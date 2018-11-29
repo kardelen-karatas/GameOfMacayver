@@ -1,3 +1,4 @@
+import re
 class LabItem:
         
     """
@@ -67,6 +68,8 @@ class Player(LabItem):
         Args:
             tile (Tile): tile of the canvas
         """
-        if tile.lab_item != None and tile.lab_item.item_type == 'object':
-            self.counter += 1
+        if tile.lab_item != None : 
+            item = re.sub(r"[\d]", "", tile.lab_item.item_type)
+            if item == 'item':
+                self.counter += 1
 
