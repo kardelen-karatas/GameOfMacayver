@@ -24,12 +24,13 @@ class Game:
         }
 
         self.item_images = {
-            'player': pygame.image.load(Config.get_image_path('octopus.png')),
-            'item0': pygame.image.load(Config.get_image_path('perso.png')),
-            'item1': pygame.image.load(Config.get_image_path('perso.png')),
-            'item2': pygame.image.load(Config.get_image_path('perso.png')),
+            'player': pygame.image.load(Config.get_image_path('octopus.png')), 
+            'item': pygame.image.load(Config.get_image_path('item.png')),
+            'item0': pygame.image.load(Config.get_image_path('item0.png')),
+            'item1': pygame.image.load(Config.get_image_path('item1.png')),
+            'item2': pygame.image.load(Config.get_image_path('item2.png')),
         }
-        self.tile_size = 20
+        self.tile_size = 60
         try:
             self.labyrinth = Labyrinth(Config.get_pattern_path(pattern_file))
             self.width = self.labyrinth.width
@@ -43,7 +44,7 @@ class Game:
             self.labyrinth.add_random_items(3)
             self.display_surface = pygame.display.set_mode(
                 (self.width * self.tile_size, self.height * self.tile_size + self.tile_size))
-            self.text_font = pygame.font.Font('freesansbold.ttf', 18)
+            self.text_font = pygame.font.Font('freesansbold.ttf', 54)
         except (IndexError, InvalidPattern) as e:
             print('error: {}'.format(e))
             quit(0)
@@ -92,7 +93,7 @@ class Game:
         text_position = (self.tile_size, self.height * self.tile_size)
         self.display_text(text, (0, 0, 0), text_position)
         self.display_surface.blit(
-            self.item_images['item0'], (0, self.height * self.tile_size))
+            self.item_images['item'], (0, self.height * self.tile_size))
 
     def game_loop(self):
         """

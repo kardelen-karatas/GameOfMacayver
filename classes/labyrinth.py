@@ -71,15 +71,18 @@ class Labyrinth:
             num_item (int): quantity of items that will be distributed on the labyrinth
         """
         self.list_item = []
+        coord_set = set()
         for i, item in enumerate(range(num_item)):
             x = random.randint(0, self.width - 1)
             y = random.randint(0, self.height - 1)
+            coord = (x, y)
             item_type = "".join("item" + str(i))
             item = LabItem(item_type= item_type, x=x, y=y)
-            while not (item.x == 0 and item.y == 0 or item.x == self.width - 1 and item.y == self.height - 1) and self.canvas[item.x][item.y].tile_type != 'floor':
+            while coord == (0, 0) or coord == (self.width - 1, self.height - 1) or self.canvas[item.y][item.x].tile_type != 'floor' or coord in coord_set:
                 item.x = random.randint(0, self.width - 1)
                 item.y = random.randint(0, self.height - 1)
-            self.canvas[item.x][item.y].add_lab_item(item)
+            coord_set.add(coord)
+            self.canvas[item.y][item.x].add_lab_item(item)
             self.list_item.append(item)
 
     def in_front_of_guard(self, player):
@@ -88,11 +91,6 @@ class Labyrinth:
         Args: 
             player (Player): the player of the game
         """
-#        right_item = self.canvas[player.y][player.x + 1].lab_item
-#        left_item = self.canvas[player.y][player.x - 1].lab_item
-#        upper_item = self.canvas[player.y - 1][player.x].lab_item
-#        lower_item = self.canvas[player.y + 1][player.x].lab_item
-        
         if player.x == self.width - 2 and player.y == self.height - 1:
             return True
         return False
