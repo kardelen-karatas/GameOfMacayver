@@ -31,7 +31,7 @@ class Game:
         }
         self.tile_size = 20
         try:
-            self.labyrinth = Labyrinth(Config.get_image_path(pattern_file))
+            self.labyrinth = Labyrinth(Config.get_pattern_path(pattern_file))
             self.width = self.labyrinth.width
             self.height = self.labyrinth.height
 

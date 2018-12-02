@@ -5,12 +5,12 @@ class Config():
 
     GAME_BASEPATH = dirname(abspath(__file__))
     IMAGES_BASEPATH = join(GAME_BASEPATH, 'images')
-    MAPS_BASEPATH = join(GAME_BASEPATH, 'maps')
+    PATTERNS_BASEPATH = join(GAME_BASEPATH, 'patterns')
 
     @classmethod
     def get_image_path(cls, image):
         return join(cls.IMAGES_BASEPATH, image)
 
     @classmethod
-    def get_map_path(cls, pattern):
-        return join(cls.IMAGES_BASEPATH, pattern)
+    def get_pattern_path(cls, pattern):
+        return join(cls.PATTERNS_BASEPATH, pattern)

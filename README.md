@@ -35,7 +35,7 @@ python run.py PATTERN_FILE_PATH
 ```
 
 ### Tutorials for Pygame (inspired by)
-* http://usingpython.com/pygame-tilemaps/
+* http://usingpython.com/pygame-tilepatterns/
 * Interface Graphique Pygame pour Python, OpenClassrooms
 
 
