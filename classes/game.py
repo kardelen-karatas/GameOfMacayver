@@ -6,7 +6,7 @@ import os
 from classes.tile import Tile
 from classes.lab_item import LabItem, Player
 from classes.labyrinth import Labyrinth, InvalidPattern
-
+from config import Config
 
 class Game:
     """
@@ -18,20 +18,20 @@ class Game:
 
     def __init__(self, pattern_file):
         self.tile_images = {
-            'floor': pygame.image.load(os.path.join('images', 'green.png')),
-            'water': pygame.image.load(os.path.join('images', 'blue.png')),
-            'guard': pygame.image.load(os.path.join('images', 'black.png')),
+            'floor': pygame.image.load(Config.get_image_path('green.png')),
+            'water': pygame.image.load(Config.get_image_path('blue.png')),
+            'guard': pygame.image.load(Config.get_image_path('black.png')),
         }
 
         self.item_images = {
-            'player': pygame.image.load(os.path.join('images', 'octopus.png')),
-            'item0': pygame.image.load(os.path.join('images', 'perso.png')),
-            'item1': pygame.image.load(os.path.join('images', 'perso.png')),
-            'item2': pygame.image.load(os.path.join('images', 'perso.png')),
+            'player': pygame.image.load(Config.get_image_path('octopus.png')),
+            'item0': pygame.image.load(Config.get_image_path('perso.png')),
+            'item1': pygame.image.load(Config.get_image_path('perso.png')),
+            'item2': pygame.image.load(Config.get_image_path('perso.png')),
         }
         self.tile_size = 20
         try:
-            self.labyrinth = Labyrinth(os.path.join('images', pattern_file))
+            self.labyrinth = Labyrinth(Config.get_image_path(pattern_file))
             self.width = self.labyrinth.width
             self.height = self.labyrinth.height
 
@@ -91,8 +91,8 @@ class Game:
         text = ' X ' + str(self.player.counter)
         text_position = (self.tile_size, self.height * self.tile_size)
         self.display_text(text, (0, 0, 0), text_position)
-#        self.display_surface.blit(
-#            self.item_images['item'], (0, self.height * self.tile_size))
+        self.display_surface.blit(
+            self.item_images['item0'], (0, self.height * self.tile_size))
 
     def game_loop(self):
         """
