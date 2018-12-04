@@ -20,7 +20,7 @@ class Game:
         self.tile_images = {
             'floor': pygame.image.load(Config.get_image_path('green.png')),
             'water': pygame.image.load(Config.get_image_path('blue.png')),
-            'guard': pygame.image.load(Config.get_image_path('black.png')),
+            'guard': pygame.image.load(Config.get_image_path('guard.png')),
         }
 
         self.item_images = {
@@ -85,7 +85,7 @@ class Game:
             text_surface, (0, self.height * self.tile_size))
         self.display_surface.blit(text_render, text_place)
 
-    def item_counter_text(self):
+    def footer(self):
         """ 
         Display number of collected item on the screen   
         """
@@ -128,7 +128,7 @@ class Game:
                         self.player.move_up(tiles)
 
                 self.display_tiles()
-                self.item_counter_text()
+                self.footer()
 
                 if self.labyrinth.items_collected(self.player) and self.labyrinth.in_front_of_guard(self.player):
                     self.display_text("YOU WON", (255, 0, 0), ((
