@@ -13,6 +13,7 @@ class Labyrinth:
     """
     Labyrinth of the game. It has 15 rows, 15 columns and is composed of the F and W. F represents the floor, W represents water.  
     """
+
     def __init__(self, pattern_file):
         self.pattern = pattern_file
         self.height = 0
@@ -44,8 +45,8 @@ class Labyrinth:
                         line_list.append(tile)
                     self.width = len(line_list)
                     self.canvas.append(line_list)
-                return self.canvas   
-        else: 
+                return self.canvas
+        else:
             raise InvalidPattern("invalid labyrinth pattern")
 
     def is_pattern_valid(self):
@@ -62,7 +63,7 @@ class Labyrinth:
                             return False
                         elif i == 0 and j == 0 and col != 'P':
                             return False
-        return True 
+        return True
 
     def add_random_items(self, num_item):
         """
@@ -77,7 +78,7 @@ class Labyrinth:
             y = random.randint(0, self.height - 1)
             coord = (x, y)
             item_type = "".join("item" + str(i))
-            item = LabItem(item_type= item_type, x=x, y=y)
+            item = LabItem(item_type=item_type, x=x, y=y)
             while coord == (0, 0) or coord == (self.width - 1, self.height - 1) or self.canvas[item.y][item.x].tile_type != 'floor' or coord in coord_set:
                 item.x = random.randint(0, self.width - 1)
                 item.y = random.randint(0, self.height - 1)
@@ -106,7 +107,6 @@ class Labyrinth:
             return True
         elif player.counter < len(self.list_item):
             return False
-    
 
     def __str__(self):
         l = ""

@@ -1,9 +1,5 @@
 import pygame
-import sys
 from pygame.locals import *
-import time
-import os
-from classes.tile import Tile
 from classes.lab_item import LabItem, Player
 from classes.labyrinth import Labyrinth, InvalidPattern
 from config import Config

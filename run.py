@@ -18,6 +18,6 @@ def main():
     g = Game(p_file)
     g.game_loop()
 
+
 if __name__ == '__main__':
     main()
-

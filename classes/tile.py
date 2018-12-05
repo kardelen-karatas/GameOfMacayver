@@ -17,11 +17,10 @@ class Tile:
         Args:
             item (LabItem): item of the labyrinth to be added  
         """
-        self.lab_item  = item
+        self.lab_item = item
 
     def remove_item(self):
-        self.lab_item  = None
+        self.lab_item = None
 
     def __str__(self):
-        return "{}:{}".format(self.tile_type,self.lab_item)
-
+        return "{}:{}".format(self.tile_type, self.lab_item)

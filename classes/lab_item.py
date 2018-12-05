@@ -1,6 +1,8 @@
 import re
+
+
 class LabItem:
-        
+
     """
     Item in the labyrinth. The item is placed on the tile of the labyrinth with coordinates given.    
     """
@@ -11,12 +13,12 @@ class LabItem:
         self.item_type = item_type
 
     def __str__(self):
-        return "{}".format(self.item_type)#, self.x, self.y)
+        return "{}".format(self.item_type)  # , self.x, self.y)
 
 
 class Player(LabItem):
 
-    def __init__(self,item_type = 'player', x = 0, y= 0):
+    def __init__(self, item_type='player', x=0, y=0):
         """
         Player of the game, inherits the LabItem class. He is initialized on the coorditanes x = 0 and y = 0.
         """
@@ -31,7 +33,7 @@ class Player(LabItem):
         """
         self.x += 1
         tiles[self.y][self.x].add_lab_item(self)
-        tiles[self.y][self.x - 1].remove_item()        
+        tiles[self.y][self.x - 1].remove_item()
 
     def move_left(self, tiles):
         """
@@ -42,7 +44,7 @@ class Player(LabItem):
         self.x -= 1
         tiles[self.y][self.x].add_lab_item(self)
         tiles[self.y][self.x + 1].remove_item()
-    
+
     def move_down(self, tiles):
         """
         Move the player to the tile below
@@ -51,7 +53,7 @@ class Player(LabItem):
         """
         self.y += 1
         tiles[self.y][self.x].add_lab_item(self)
-        tiles[self.y - 1][self.x].remove_item()               
+        tiles[self.y - 1][self.x].remove_item()
 
     def move_up(self, tiles):
         """
@@ -62,15 +64,14 @@ class Player(LabItem):
         self.y -= 1
         tiles[self.y][self.x].add_lab_item(self)
         tiles[self.y + 1][self.x].remove_item()
-              
+
     def pick_up(self, tile):
         """
         Pick up an item and increment the counter
         Args:
             tile (Tile): tile of the canvas
         """
-        if tile.lab_item != None : 
+        if tile.lab_item != None:
             item = re.sub(r"[\d]", "", tile.lab_item.item_type)
             if item == 'item':
                 self.counter += 1
-
