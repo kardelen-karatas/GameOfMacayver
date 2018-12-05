@@ -81,6 +81,7 @@ class Labyrinth:
             while coord == (0, 0) or coord == (self.width - 1, self.height - 1) or self.canvas[item.y][item.x].tile_type != 'floor' or coord in coord_set:
                 item.x = random.randint(0, self.width - 1)
                 item.y = random.randint(0, self.height - 1)
+                coord = (item.x, item.y)
             coord_set.add(coord)
             self.canvas[item.y][item.x].add_lab_item(item)
             self.list_item.append(item)

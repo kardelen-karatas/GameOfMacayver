@@ -8,6 +8,7 @@ from classes.lab_item import LabItem, Player
 from classes.labyrinth import Labyrinth, InvalidPattern
 from config import Config
 
+
 class Game:
     """
     Create the graphical environment of the game. It takes as a parameter a text file that contains the pattern
@@ -24,7 +25,7 @@ class Game:
         }
 
         self.item_images = {
-            'player': pygame.image.load(Config.get_image_path('octopus.png')), 
+            'player': pygame.image.load(Config.get_image_path('octopus.png')),
             'item': pygame.image.load(Config.get_image_path('item.png')),
             'item0': pygame.image.load(Config.get_image_path('item0.png')),
             'item1': pygame.image.load(Config.get_image_path('item1.png')),

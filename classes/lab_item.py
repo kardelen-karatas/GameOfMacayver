@@ -13,6 +13,7 @@ class LabItem:
     def __str__(self):
         return "{}".format(self.item_type)#, self.x, self.y)
 
+
 class Player(LabItem):
 
     def __init__(self,item_type = 'player', x = 0, y= 0):
