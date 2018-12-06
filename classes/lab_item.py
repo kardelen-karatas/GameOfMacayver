@@ -13,7 +13,7 @@ class LabItem:
         self.item_type = item_type
 
     def __str__(self):
-        return "{}".format(self.item_type)  # , self.x, self.y)
+        return "{}".format(self.item_type)
 
 
 class Player(LabItem):
@@ -71,7 +71,7 @@ class Player(LabItem):
         Args:
             tile (Tile): tile of the canvas
         """
-        if tile.lab_item != None:
+        if tile.lab_item is not None:
             item = re.sub(r"[\d]", "", tile.lab_item.item_type)
             if item == 'item':
                 self.counter += 1

@@ -2,7 +2,6 @@ import random
 import pygame
 from classes.tile import Tile
 from classes.lab_item import LabItem
-from pygame.locals import *
 
 
 class InvalidPattern(Exception):
@@ -11,7 +10,8 @@ class InvalidPattern(Exception):
 
 class Labyrinth:
     """
-    Labyrinth of the game. It has 15 rows, 15 columns and is composed of the F and W. F represents the floor, W represents water.  
+    Labyrinth of the game. It has 15 rows, 15 columns and is composed of the F and W.
+    F represents the floor, W represents water.
     """
 
     def __init__(self, pattern_file):
@@ -19,8 +19,10 @@ class Labyrinth:
         self.height = 0
         self.width = 0
         self.canvas = []
-        self.built_tiles()
+        self.list_item = []
+        self.built_tiles
 
+    @property
     def built_tiles(self):
         """
         Read the file that contains the labyrinth pattern and draw the canvas of the labyrinth if the pattern if valid.
@@ -71,7 +73,6 @@ class Labyrinth:
         Args: 
             num_item (int): quantity of items that will be distributed on the labyrinth
         """
-        self.list_item = []
         coord_set = set()
         for i, item in enumerate(range(num_item)):
             x = random.randint(0, self.width - 1)
@@ -79,13 +80,18 @@ class Labyrinth:
             coord = (x, y)
             item_type = "".join("item" + str(i))
             item = LabItem(item_type=item_type, x=x, y=y)
-            while coord == (0, 0) or coord == (self.width - 1, self.height - 1) or self.canvas[item.y][item.x].tile_type != 'floor' or coord in coord_set:
+            while coord == (0, 0) or coord == (self.width - 1, self.height - 1) \
+                    or self.canvas[item.y][item.x].tile_type != 'floor' or coord in coord_set:
+
                 item.x = random.randint(0, self.width - 1)
                 item.y = random.randint(0, self.height - 1)
                 coord = (item.x, item.y)
             coord_set.add(coord)
             self.canvas[item.y][item.x].add_lab_item(item)
             self.list_item.append(item)
+
+    def is_floor(self, x, y):
+        pass
 
     def in_front_of_guard(self, player):
         """
@@ -109,9 +115,9 @@ class Labyrinth:
             return False
 
     def __str__(self):
-        l = ""
+        line = ""
         for line in self.canvas:
             for col in line:
-                l += str(col) + "  "
-            l += '\n'
-        return l
+                line += str(col) + "  "
+            line += '\n'
+        return line

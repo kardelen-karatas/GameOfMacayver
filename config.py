@@ -1,7 +1,7 @@
 from os.path import abspath, dirname, join
 
 
-class Config():
+class Config:
 
     GAME_BASEPATH = dirname(abspath(__file__))
     IMAGES_BASEPATH = join(GAME_BASEPATH, 'images')

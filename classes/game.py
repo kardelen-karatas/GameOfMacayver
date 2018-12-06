@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from classes.lab_item import LabItem, Player
+from classes.lab_item import Player
 from classes.labyrinth import Labyrinth, InvalidPattern
 from config import Config
 
@@ -104,22 +104,26 @@ class Game:
 
                 elif event.type == KEYDOWN:
                     tiles = self.labyrinth.canvas
-                    if (event.key == K_RIGHT) and self.player.x < self.width - 1 and tiles[self.player.y][self.player.x + 1].tile_type == 'floor':
+                    if (event.key == K_RIGHT) and self.player.x < self.width - 1 \
+                            and tiles[self.player.y][self.player.x + 1].tile_type == 'floor':
                         self.player.pick_up(
                             tiles[self.player.y][self.player.x + 1])
                         self.player.move_right(tiles)
 
-                    if (event.key == K_LEFT) and self.player.x != 0 and tiles[self.player.y][self.player.x - 1].tile_type == 'floor':
+                    if (event.key == K_LEFT) and self.player.x != 0 \
+                            and tiles[self.player.y][self.player.x - 1].tile_type == 'floor':
                         self.player.pick_up(
                             tiles[self.player.y][self.player.x - 1])
                         self.player.move_left(tiles)
 
-                    if (event.key == K_DOWN) and self.player.y < self.height - 1 and tiles[self.player.y + 1][self.player.x].tile_type == 'floor':
+                    if (event.key == K_DOWN) and self.player.y < self.height - 1 \
+                            and tiles[self.player.y + 1][self.player.x].tile_type == 'floor':
                         self.player.pick_up(
                             tiles[self.player.y + 1][self.player.x])
                         self.player.move_down(tiles)
 
-                    if (event.key == K_UP) and self.player.y != 0 and tiles[self.player.y - 1][self.player.x].tile_type == 'floor':
+                    if (event.key == K_UP) and self.player.y != 0 \
+                            and tiles[self.player.y - 1][self.player.x].tile_type == 'floor':
                         self.player.pick_up(
                             tiles[self.player.y - 1][self.player.x])
                         self.player.move_up(tiles)
