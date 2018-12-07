@@ -9,9 +9,11 @@ class InvalidPattern(Exception):
 
 
 class Labyrinth:
+
     """
-    Labyrinth of the game. It has 15 rows, 15 columns and is composed of the F and W.
-    F represents the floor, W represents water.
+    Labyrinth of the game. It has 15 rows, 15 columns
+    and is composed of the F and W. F represents the floor
+    and W represents water.
     """
 
     def __init__(self, pattern_file):
@@ -25,11 +27,13 @@ class Labyrinth:
     @property
     def built_tiles(self):
         """
-        Read the file that contains the labyrinth pattern and draw the canvas of the labyrinth if the pattern if valid.
+        Read the file that contains the labyrinth pattern and
+        draw the canvas of the labyrinth if the pattern if valid.
         Returns:
             canvas (list): the canvas of the labyrinth
         Raises:
-            InvalidPattern: the pattern of the labyrinth does not correspond to he requests 
+            InvalidPattern: the pattern of the labyrinth
+            does not correspond to he requests.
         """
         if self.is_pattern_valid():
             with open(self.pattern, "r") as file:
@@ -69,9 +73,10 @@ class Labyrinth:
 
     def add_random_items(self, num_item):
         """
-        Distibute items randomly on the labyrinth with a given quantity. 
-        Args: 
-            num_item (int): quantity of items that will be distributed on the labyrinth
+        Distibute items randomly on the labyrinth with a given quantity.
+        Args:
+            num_item (int): quantity of items that
+            will be distributed on the labyrinth
         """
         coord_set = set()
         for i, item in enumerate(range(num_item)):
@@ -80,9 +85,10 @@ class Labyrinth:
             coord = (x, y)
             item_type = "".join("item" + str(i))
             item = LabItem(item_type=item_type, x=x, y=y)
-            while coord == (0, 0) or coord == (self.width - 1, self.height - 1) \
-                    or self.canvas[item.y][item.x].tile_type != 'floor' or coord in coord_set:
-
+            while (
+                coord == (0, 0) or coord == (14, 14) or
+                self.is_floor(item.x, item.y) or coord in coord_set
+            ):
                 item.x = random.randint(0, self.width - 1)
                 item.y = random.randint(0, self.height - 1)
                 coord = (item.x, item.y)
@@ -91,12 +97,12 @@ class Labyrinth:
             self.list_item.append(item)
 
     def is_floor(self, x, y):
-        pass
+        return self.canvas[y][x].tile_type != 'floor'
 
     def in_front_of_guard(self, player):
         """
-        Check if the player is in front of the door. 
-        Args: 
+        Check if the player is in front of the door.
+        Args:
             player (Player): the player of the game
         """
         if player.x == self.width - 2 and player.y == self.height - 1:
@@ -105,8 +111,8 @@ class Labyrinth:
 
     def items_collected(self, player):
         """
-        Check if the player is in front of the door and picked up all the items. 
-        Args: 
+        Check if the player is in front of the door and picked up all items.
+        Args:
             player (Player): the player of the game
         """
         if player.counter == len(self.list_item):

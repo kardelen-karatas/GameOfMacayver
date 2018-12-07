@@ -4,7 +4,8 @@ import re
 class LabItem:
 
     """
-    Item in the labyrinth. The item is placed on the tile of the labyrinth with coordinates given.    
+    Item in the labyrinth. The item is placed
+    on the tile of the labyrinth with coordinates given.
     """
 
     def __init__(self, item_type, x, y):
@@ -20,7 +21,8 @@ class Player(LabItem):
 
     def __init__(self, item_type='player', x=0, y=0):
         """
-        Player of the game, inherits the LabItem class. He is initialized on the coorditanes x = 0 and y = 0.
+        Player of the game, inherits the LabItem class.
+        He is initialized on the coorditanes x = 0 and y = 0.
         """
         LabItem.__init__(self, item_type, x, y)
         self.counter = 0
