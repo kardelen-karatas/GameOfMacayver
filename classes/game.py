@@ -108,7 +108,6 @@ class Game:
 
         def iswalkable(y, x):
             walkable = tiles[y][x].tile_type == 'floor'
-            print(walkable)
             return walkable
 
         while not game_exit:
@@ -141,7 +140,7 @@ class Game:
                     if (
                         (event.key == K_DOWN) and
                         self.player.y < self.height - 1 and
-                        iswalkable(self.player.y + 1, self.player.x - 1)
+                        iswalkable(self.player.y + 1, self.player.x)
                     ):
                         self.player.pick_up(
                             tiles[self.player.y + 1][self.player.x]
@@ -173,8 +172,8 @@ class Game:
                     )
                     game_exit = True
 
-                if not (
-                    self.labyrinth.items_collected(self.player) and
+                if (
+                    not self.labyrinth.items_collected(self.player) and
                     self.labyrinth.in_front_of_guard(self.player)
                 ):
                     self.display_text(
