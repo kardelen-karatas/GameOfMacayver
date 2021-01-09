@@ -1,7 +1,3 @@
-# OpenClassrooms Project 3
-
-This project was realized as part of an training program for the OpenClassrooms Python Application Developer course. Project 3 of the Python Application Developer course aims to develop a simple game by using object-oriented programming.   
-
 ## The Hungry Octopus Game
 
 The game consists of a tile maze with a player (an octopus) and 2 items (plankton) randomly distributed in the labyrinth. The labyrinth is composed of the floor and water. The player can only move on the floor with up, down, right and left with the keyboard buttons. The game ends when the player picks up all the items and arrives at the door. 
